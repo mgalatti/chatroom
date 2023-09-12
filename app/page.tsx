@@ -4,14 +4,14 @@ import io from "socket.io-client";
 import { Input, Button } from "@chakra-ui/react";
 
 const Chat = () => {
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [socket, setSocket] = useState(null);
+  const [message, setMessage] = useState<any>("");
+  const [messages, setMessages] = useState<string[]>([]);
+  const [socket, setSocket] = useState<null | any >(null);
   const [alreadyWriting, setAlreadyWriting] = useState(false)
 
   useEffect(() => {
     console.log("Connecting to WebSocket server...");
-    const newSocket = io('https://wvsrxshz-5000.brs.devtunnels.ms/', {
+    const newSocket = io('http://localhost:5000/', {
       transports: ["websocket"],
     });
 
@@ -36,15 +36,15 @@ const Chat = () => {
     };
   }, []);
 
-  const handleMessageSubmit = (e) => {
+  const handleMessageSubmit = (e: any) => {
     e.preventDefault();
-    if (message.trim() && socket) {
-      socket.emit("message", message);
+    if (message.trim() && socket as any) {
+      socket?.emit("message", message);
       setMessage("");
     }
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value)
     socket && socket.emit("message", "...")
   }
