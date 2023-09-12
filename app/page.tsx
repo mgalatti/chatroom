@@ -1,15 +1,17 @@
 "use client"
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
+import { Input, Button } from "@chakra-ui/react";
 
 const Chat = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
+  const [alreadyWriting, setAlreadyWriting] = useState(false)
 
   useEffect(() => {
     console.log("Connecting to WebSocket server...");
-    const newSocket = io('http://localhost:5000/', {
+    const newSocket = io('https://wvsrxshz-5000.brs.devtunnels.ms/', {
       transports: ["websocket"],
     });
 
@@ -19,6 +21,9 @@ const Chat = () => {
 
     newSocket.on("message", (newMessage) => {
       console.log("Received message:", newMessage);
+      if (newMessage === '...') {
+        return setMessages((prevMessages) => [...prevMessages, "Escribiendo"]);
+      }
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
@@ -39,21 +44,22 @@ const Chat = () => {
     }
   };
 
+  const handleInputChange = (e) => {
+    setMessage(e.target.value)
+    socket && socket.emit("message", "...")
+  }
+
   return (
     <div>
       <h1>Chat App</h1>
       <div>
-        {messages.map((msg, index) => (
-          <div key={index}>{msg}</div>
-        ))}
+        {messages.map((msg, index) => {
+          return (<div key={index}>{msg}</div>)
+        })}
       </div>
       <form onSubmit={handleMessageSubmit}>
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <button type="submit">Send</button>
+        <Input type="text" value={message} className="mb-4" onChange={handleInputChange} />
+        <Button className="flex ml-auto" type="submit">Send</Button>
       </form>
     </div>
   );
