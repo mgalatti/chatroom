@@ -46,7 +46,7 @@ const Chat = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value)
-    socket && socket.emit("message", "...")
+    // socket && socket.emit("message", "...")
   }
 
   return (
