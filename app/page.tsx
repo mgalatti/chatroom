@@ -11,7 +11,7 @@ const Chat = () => {
 
   useEffect(() => {
     console.log("Connecting to WebSocket server...");
-    const newSocket = io('https://wvsrxshz-5000.brs.devtunnels.ms/', {
+    const newSocket = io('https://testchatroom-w0r2.onrender.com', {
       transports: ["websocket"],
     });
 
