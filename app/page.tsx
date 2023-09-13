@@ -21,9 +21,9 @@ const Chat = () => {
 
     newSocket.on("message", (newMessage) => {
       console.log("Received message:", newMessage);
-      if (newMessage === '...') {
-        return setMessages((prevMessages) => [...prevMessages, "Escribiendo"]);
-      }
+      // if (newMessage === '...') {
+      //   return setMessages((prevMessages) => [...prevMessages, "Escribiendo"]);
+      // }
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 

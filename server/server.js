@@ -16,9 +16,9 @@ io.on("connection", (socket) => {
   socket.on("message", (message) => {
     console.log("Received message:", message);
     
-    if(message === '...'){
-        io.emit("message", "Escribiendo...")
-    }
+    // if(message === '...'){
+    //     io.emit("message", "Escribiendo...")
+    // }
     // Broadcast the message to all connected clients
     io.emit("message", message);
 
